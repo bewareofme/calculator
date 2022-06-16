@@ -19,8 +19,13 @@ function operate(a,operator,b){
 
 const buttons= document.querySelectorAll('.button');
 const display=document.querySelector('.display');
+const active =document.querySelector('.active');
 buttons.forEach(button=>{
     button.addEventListener('click',()=>{
+        if(displayData.active===1){
+            display.textContent='';
+            displayData.active=0;
+        }
         display.textContent+=button.textContent;
     })
 })
@@ -28,6 +33,7 @@ let displayData={
     firstNumber:null,
     secondNumber:null,
     operator:null,
+    active:0
 }
 const operators=document.querySelectorAll('.operator')
 operators.forEach(operator=>{
@@ -36,22 +42,27 @@ operators.forEach(operator=>{
         else if(operator.textContent==='-'){displayData.operator=subtract;}
         else if(operator.textContent==='*'){displayData.operator=multiply;}
         else if(operator.textContent==='/'){displayData.operator=divide;}
-        console.log(operator);
-        console.log(active);
-        operator.classList.add('active');
+        displayData.active=1;
         if(displayData.firstNumber===null){
         displayData.firstNumber=Number(display.textContent);}
         else{
             displayData.secondNumber=Number(display.textContent);
             display.textContent=operate(displayData.firstNumber,displayData.operator,displayData.secondNumber);
             displayData.firstNumber=operate(displayData.firstNumber,displayData.operator,displayData.secondNumber);
-            operator.classList.remove('active');
-            console.log(active)
             }
 })
     })
 const equal=document.querySelector('.equal');
 equal.addEventListener('click',()=>{
-    display.secondNumber=Number(display.textContent)
-
+    displayData.secondNumber=Number(display.textContent);
+    display.textContent=operate(displayData.firstNumber,displayData.operator,displayData.secondNumber);
+    displayData.firstNumber=null;
+    displayData.active=1;
 })
+const clear=document.querySelector('.clear');
+clear.addEventListener('click',()=>{
+    displayData.firstNumber=null;
+    displayData.secondNumber=null;
+    displayData.operator=null;
+    displayData.active=0;
+    display.textContent='';})
