@@ -25,7 +25,12 @@ buttons.forEach(button=>{
         if(displayData.active){
             display.textContent='';
             displayData.active=0;
+            displayData.equalactive=0;
         }
+        if(displayData.equalactive){
+            display.textContent='';
+            displayData.equalactive=0;
+            displayData.firstNumber=null}
         display.textContent+=button.textContent;
     })
 })
@@ -39,14 +44,14 @@ let displayData={
 const operators=document.querySelectorAll('.operator')
 operators.forEach(operator=>{
     operator.addEventListener('click',()=>{
-    if(displayData.equalactive!==1){
+    if(displayData.equalactive===1)displayData.firstNumber=null;
         if(displayData.active===1)return;
         if(displayData.firstNumber===null){displayData.firstNumber=Number(display.textContent);}
         else{
             displayData.secondNumber=Number(display.textContent);
             display.textContent=operate(displayData.firstNumber,displayData.operator,displayData.secondNumber);;
             displayData.firstNumber=Number(display.textContent);
-        }}
+        }
         if(operator.textContent==='+'){displayData.operator=add;}
         else if(operator.textContent==='-'){displayData.operator=subtract;}
         else if(operator.textContent==='*'){displayData.operator=multiply;}
