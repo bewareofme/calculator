@@ -16,13 +16,13 @@ function operate(a,operator,b){
     return operator(a,b);
 }
 // console.log(operate(5,subtract,4));
-
 const buttons= document.querySelectorAll('.button');
 const display=document.querySelector('.display');
 const active =document.querySelector('.active');
 const backspace=document.querySelector('.backspace');
 buttons.forEach(button=>{
-    button.addEventListener('click',()=>{
+    button.addEventListener('click',(e)=>{
+        console.log(e);
         if((display.textContent.includes('.'))&&button.textContent==='.'){
             return  ;
         }
@@ -101,4 +101,10 @@ backspace.addEventListener('click',()=>{
     let str=display.textContent;
     const strlen=str.length;
     display.textContent=display.textContent.substring(0,strlen-1)
+})
+window.addEventListener('keydown',function(e){
+const key =document.querySelector(`button[data-key="${e.keyCode}${e.shiftKey}"]`);
+if(!key)return;
+console.log(key);
+key.click();
 })
