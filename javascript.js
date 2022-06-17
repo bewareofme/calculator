@@ -20,8 +20,12 @@ function operate(a,operator,b){
 const buttons= document.querySelectorAll('.button');
 const display=document.querySelector('.display');
 const active =document.querySelector('.active');
+const backspace=document.querySelector('.backspace');
 buttons.forEach(button=>{
     button.addEventListener('click',()=>{
+        if((display.textContent.includes('.'))&&button.textContent==='.'){
+            return  ;
+        }
         if(displayData.active){
             display.textContent='';
             displayData.active=0;
@@ -31,7 +35,7 @@ buttons.forEach(button=>{
             display.textContent='';
             displayData.equalactive=0;
             displayData.firstNumber=null}
-        display.textContent+=button.textContent;
+            display.textContent+=button.textContent;
     })
 })
 let displayData={
@@ -93,3 +97,8 @@ clear.addEventListener('click',()=>{
         displayData.equalactive=1;
         display.textContent='Error  snarky zero division';
     }
+backspace.addEventListener('click',()=>{
+    let str=display.textContent;
+    const strlen=str.length;
+    display.textContent=display.textContent.substring(0,strlen-1)
+})
