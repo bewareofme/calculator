@@ -39,7 +39,7 @@ let displayData={
     secondNumber:null,
     operator:null,
     active:0,
-    equalactive:0
+    equalactive:0,
 }
 const operators=document.querySelectorAll('.operator')
 operators.forEach(operator=>{
@@ -49,7 +49,10 @@ operators.forEach(operator=>{
         if(displayData.firstNumber===null){displayData.firstNumber=Number(display.textContent);}
         else{
             displayData.secondNumber=Number(display.textContent);
-            display.textContent=operate(displayData.firstNumber,displayData.operator,displayData.secondNumber);;
+            if(displayData.secondNumber ===0 && displayData.operator===divide){
+                zerodivision();
+                return;}
+            display.textContent=operate(displayData.firstNumber,displayData.operator,displayData.secondNumber).toFixed(5);
             displayData.firstNumber=Number(display.textContent);
         }}
         if(operator.textContent==='+'){displayData.operator=add;}
@@ -66,7 +69,10 @@ equal.addEventListener('click',()=>{
 
     if(displayData.equalactive || displayData.active)return;
     displayData.secondNumber=Number(display.textContent);
-    display.textContent=operate(displayData.firstNumber,displayData.operator,displayData.secondNumber);
+    if(displayData.secondNumber ===0 && displayData.operator===divide){
+        zerodivision();
+        return;}
+    display.textContent=operate(displayData.firstNumber,displayData.operator,displayData.secondNumber).toFixed(5);
     displayData.firstNumber=Number(display.textContent);
     displayData.equalactive=1;
 })
@@ -78,3 +84,12 @@ clear.addEventListener('click',()=>{
     displayData.active=0;
     displayData.equalactive=0;
     display.textContent='';})
+
+    function zerodivision(){
+        displayData.firstNumber=null;
+        displayData.secondNumber=null;
+        displayData.operator=null;
+        displayData.active=1;
+        displayData.equalactive=1;
+        display.textContent='Error  snarky zero division';
+    }
